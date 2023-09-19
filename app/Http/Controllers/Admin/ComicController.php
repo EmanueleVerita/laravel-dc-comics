@@ -29,6 +29,19 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|max:128',
+            'description' => 'required' ,
+            'thumb' => 'nullable|max:2048' ,
+            'price' => 'required|numeric|min:2|max:100' ,
+            'series' => 'nullable|max:128' ,
+            'sale_date' => 'nullable|date' ,
+            'type' => 'required|max:128' 
+        ] , [
+            'title.required' => 'Il titolo è obbligatorio' ,
+            'title.max' => 'Il titolo può avere al massimo 128 caratteri'
+        ]);
+
 
         $formData = $request->all();
 
@@ -60,7 +73,7 @@ class ComicController extends Controller
      */
     public function edit(Comic $comic)
     {
-        //
+        return view('admin.comics.show' , compact('comic'));
     }
 
     /**
